@@ -16,7 +16,7 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    """Handle license image upload"""
+    """Handle license image upload with OCR extraction"""
     
     # Check if files were uploaded
     if 'front_image' not in request.files or 'back_image' not in request.files:
@@ -34,11 +34,24 @@ def upload():
         front_url = upload_to_r2(front_file, prefix='licenses/front')
         back_url = upload_to_r2(back_file, prefix='licenses/back')
         
+        # Reset file pointers so we can read them again for OCR
+        front_file.seek(0)
+        back_file.seek(0)
+        
+        # Extract text from both images
+        from src.ocr import extract_text_from_image
+        front_text = extract_text_from_image(front_file)
+        back_text = extract_text_from_image(back_file)
+        
         return jsonify({
             'status': 'success',
-            'message': 'Images uploaded successfully',
+            'message': 'Images uploaded and processed',
             'front_url': front_url,
-            'back_url': back_url
+            'back_url': back_url,
+            'ocr': {
+                'front': front_text,
+                'back': back_text
+            }
         })
     
     except Exception as e:
