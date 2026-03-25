@@ -33,7 +33,7 @@ def upload():
         # Upload both images to R2
         front_url = upload_to_r2(front_file, prefix='licenses/front')
         back_url = upload_to_r2(back_file, prefix='licenses/back')
-        
+        """
         # Reset file pointers so we can read them again for OCR
         front_file.seek(0)
         back_file.seek(0)
@@ -53,6 +53,7 @@ def upload():
                 'back': back_text
             }
         })
+        """
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
