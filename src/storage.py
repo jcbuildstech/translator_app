@@ -38,7 +38,7 @@ def upload_to_r2(file, prefix='uploads'):
         ExtraArgs={'ContentType': file.content_type or 'image/jpeg'}
     )
       # IMPORTANT: Reset file pointer so it can be read again
-    file.seek(0)
+    # file.seek(0)
 
     # Return public URL via your custom domain
     return f"{Config.R2_PUBLIC_URL}/{filename}"
