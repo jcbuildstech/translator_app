@@ -4,4 +4,5 @@ boto3==1.42.72
 psycopg==3.3.3
 psycopg-binary==3.3.3
 gunicorn==25.1.0
-pytesseract==0.3.13opencv-python-headless==4.10.0.84
+pytesseract==0.3.13
+opencv-python-headless==4.10.0.84
