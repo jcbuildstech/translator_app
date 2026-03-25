@@ -14,7 +14,15 @@ s3_client = boto3.client(
 )
 
 def upload_to_r2(file, prefix='uploads'):
-    """Upload file to R2, return public URL via custom domain"""
+    """Upload file to R2, return public URL via custom domain
+    
+        Args:
+        file: FileStorage object from Flask request
+        prefix: Folder prefix in bucket (default: 'uploads')
+    
+    Returns:
+        Public URL of uploaded file
+    """
     
     # Generate unique filename
     original_filename = secure_filename(file.filename)
@@ -29,6 +37,8 @@ def upload_to_r2(file, prefix='uploads'):
         filename,
         ExtraArgs={'ContentType': file.content_type or 'image/jpeg'}
     )
-    
+      # IMPORTANT: Reset file pointer so it can be read again
+    file.seek(0)
+
     # Return public URL via your custom domain
     return f"{Config.R2_PUBLIC_URL}/{filename}"
