@@ -42,18 +42,18 @@ def upload():
         from src.ocr import extract_text_from_image
         front_text = extract_text_from_image(front_file)
         back_text = extract_text_from_image(back_file)
-        
+        """
         return jsonify({
             'status': 'success',
             'message': 'Images uploaded and processed',
             'front_url': front_url,
             'back_url': back_url,
-            'ocr': {
-                'front': front_text,
-                'back': back_text
-            }
+           # 'ocr': {
+          #      'front': front_text,
+           #     'back': back_text
+          #  }
         })
-        """
+        
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
